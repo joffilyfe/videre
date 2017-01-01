@@ -1,0 +1,30 @@
+{
+  "name": "videre",
+  "version": "0.0.1",
+  "description": "A basic html5 player for music and video.",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "node-sass src/style/core.sass dist/css/videre.min.css --output-style compressed",
+    "js": "rollup -c",
+    "bundle": "npm run js && npm run sass"
+  },
+  "keywords": [
+    "player",
+    "video",
+    "música"
+  ],
+  "author": "Joffily",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "node-sass": "^4.1.1",
+    "rollup": "^0.38.1",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^7.0.0",
+    "rollup-plugin-eslint": "^3.0.0",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-uglify": "^1.0.1",
+    "rollup-watch": "^2.5.0"
+  }
+}

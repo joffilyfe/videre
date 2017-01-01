@@ -1,0 +1,7 @@
+dist
+node_modules
+.DS_Store
+samples
+.sass-cache
+*.mp4
+*.html
