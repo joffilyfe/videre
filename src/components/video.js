@@ -11,6 +11,7 @@ export default class Video extends HTMLObject {
   bindEvents() {
     this.listen('click', Selector.PLAYBACK_BUTTON, () => this.toggle());
     this.listen('click', Selector.PROGRESS_CONTAINER, (event) => this.playTime(event));
+    this.listen('mousemove', Selector.PROGRESS_CONTAINER, (event) => this.playTime(event));
   }
 
   play() {
@@ -26,9 +27,12 @@ export default class Video extends HTMLObject {
   }
 
   playTime(event) {
-    let position = ((event.offsetX * 100) / event.target.offsetWidth);
-    let time = (this.el.duration * position) / 100;
-    this.el.currentTime = time;
+    let container = document.querySelector(Selector.PROGRESS_CONTAINER);
+    if (container.getAttribute('data-click') === 'true' || event.type == 'click') {
+      let position = ((event.offsetX * 100) / container.offsetWidth);
+      let time = (this.el.duration * position) / 100;
+      this.el.currentTime = time;
+    }
   }
 
   template() {
