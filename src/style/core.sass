@@ -6,3 +6,18 @@
 @import 'components/player_video'
 @import 'components/player_wrapper'
 @import 'components/player_progressbar'
+
+
+.loading-overlay
+  display: none
+  position: absolute
+  background: red
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+
+.player-wrapper[data-loading='true']
+  .loading-overlay
+    display: block;
+

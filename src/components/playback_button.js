@@ -1,15 +1,28 @@
-export default class PlaybackButton {
-  constructor(element) {
-    this.element = element;
+import { div, button } from '../base/elements.js';
+import HTMLObject from '../base/html_object.js';
+
+export default class PlaybackButton extends HTMLObject   {
+  constructor() {
+    super();
+    this.el = this.el ? this.el : button({'className': 'player-button -play icon-play'});
   }
 
-  update(paused) {
-    if (paused) {
-      this.element.classList.add('icon-play');
-      this.element.classList.remove('icon-pause');
+  bindEvents() {
+    this.listen('play',  'video', (event) => this.changeButtonIcon(event));
+    this.listen('pause',  'video', (event) => this.changeButtonIcon(event));
+  }
+
+  changeButtonIcon(event) {
+    if (event.target.paused) {
+      this.el.classList.add('icon-play');
+      this.el.classList.remove('icon-pause');
     } else {
-      this.element.classList.add('icon-pause');
-      this.element.classList.remove('icon-play');
+      this.el.classList.add('icon-pause');
+      this.el.classList.remove('icon-play');
     }
+  }
+
+  template() {
+    return div({'id': 'btn'}, this.el);
   }
 }

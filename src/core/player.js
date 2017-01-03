@@ -1,22 +1,24 @@
-import Elements from './elements.js';
-import Control from './control.js';
-import View from './view.js';
+import View from '../template/view.js';
 
 export default class Player {
-  constructor(options = {}) {
-    this.options = options;
-    this.elements = new Elements(options.containerId);
-    this.view = new View(this.elements);
-    this.control = new Control(this.elements);
-    this.setVideo();
-  }
+  constructor(options) {
+    this.view = new View(options);
+    this.video = this.view.video ? this.view.video : null;
+    this.wrapper = this.view.wrapper ? this.view.wrapper : null;
 
-  setVideo() {
-    this.elements.getVideo().source =this.options.src;
-  }
+    if (this.video) {
+      this.video.source = options.src ? options.src : '';
+      this.video.poster = options.poster ? options.poster : '';
+    }
 
-  render() {
-    let view = new View(this.elements);
-    view.render();
+    if (this.wrapper) {
+      this.wrapper.width = options.width ? options.width : 600;
+      this.wrapper.height = options.height ? options.height : 400;
+    }
+
+    this.view.render();
+    this.view.bindEvents();
   }
 }
+
+

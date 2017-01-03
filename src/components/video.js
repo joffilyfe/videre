@@ -1,48 +1,45 @@
-export default class Video {
+import { video, div } from '../base/elements.js';
+import HTMLObject from '../base/html_object.js';
+import * as Selector from '../base/selector.js';
 
-  constructor(element) {
-    this.element = element;
+export default class Video extends HTMLObject {
+  constructor() {
+    super();
+    this.el = this.el ? this.el : video();
   }
 
-  get source() {
-    return this.element.src;
+  bindEvents() {
+    this.listen('click', Selector.PLAYBACK_BUTTON, () => this.toggle());
+    this.listen('click', Selector.PROGRESS_CONTAINER, (event) => this.playTime(event));
   }
 
-  set source(value) {
-    this.element.src = value;
+  play() {
+    return this.el.paused && this.el.play();
   }
 
-  get total() {
-    return this.element.duration;
-  }
-
-  get time() {
-    return this.element.currentTime;
-  }
-
-  set time(t) {
-    this.element.currentTime = t;
+  pause() {
+    return !this.el.paused && this.el.pause();
   }
 
   toggle() {
     this.play() || this.pause();
   }
 
-  play() {
-    return this.element.paused && this.element.play();
+  playTime(event) {
+    let position = ((event.offsetX * 100) / event.target.offsetWidth);
+    let time = (this.el.duration * position) / 100;
+    this.el.currentTime = time;
   }
 
-  pause() {
-    return !this.element.paused && this.element.pause();
+  template() {
+    return div({'className': 'player-video'}, this.element);
   }
 
-  isPaused() {
-    return this.element.paused;
+  set source(source) {
+    this.el.src = source;
   }
 
-  event(type, callback) {
-    for (var i = 0, len = type.length; i < len; i++) {
-      this.element.addEventListener(type[i], () => callback(), false);
-    }
+  set poster(url) {
+    this.el.poster = url;
   }
 }
